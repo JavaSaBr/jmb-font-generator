@@ -1,0 +1,1 @@
+It's a plugin for SS Editor to generate fonts for jMonkeyEngine 3.

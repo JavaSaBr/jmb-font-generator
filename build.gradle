@@ -1,0 +1,142 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.spaceshift'
+version = '1.0.0'
+
+ext.artifactId = 'ss-editor-font-generator'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+configurations {
+    pluginDependences
+}
+
+dependencies {
+    compile 'com.github.JavaSaBr:jME3-SpaceShift-Editor:develop-SNAPSHOT'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+task cleanPluginFolders(type: Delete) {
+    doFirst {
+
+        def projectFolder = Paths.get("$buildDir").getParent()
+        def embeddedPluginsFolder = projectFolder.resolve("embedded-plugins")
+        def deployPlugin = projectFolder.resolve("deploy-plugin")
+
+        if (Files.exists(embeddedPluginsFolder)) {
+            GFileUtils.deleteDirectory(embeddedPluginsFolder.toFile())
+        }
+
+        if (Files.exists(deployPlugin)) {
+            GFileUtils.deleteDirectory(deployPlugin.toFile())
+        }
+    }
+}
+
+task createPluginFolders(dependsOn: 'cleanPluginFolders') {
+    doFirst {
+
+        def projectFolder = Paths.get("$buildDir").getParent()
+        def embeddedPluginsFolder = projectFolder.resolve("embedded-plugins")
+
+        Files.createDirectory(embeddedPluginsFolder)
+
+        def pluginFolder = embeddedPluginsFolder.resolve(String.valueOf(artifactId))
+
+        Files.createDirectory(pluginFolder)
+
+        def configuration = configurations.pluginDependences
+        def dependencies = configuration.dependencies
+
+        if (dependencies.isEmpty()) {
+            return
+        }
+
+        def libsFolder = pluginFolder.resolve("libs")
+
+        Files.createDirectory(libsFolder)
+    }
+}
+
+task copyPluginDependences(type: Copy, dependsOn: ['install', 'createPluginFolders']) {
+    doFirst {
+
+        def configuration = configurations.pluginDependences
+        def dependencies = configuration.dependencies
+
+        if (dependencies.isEmpty()) {
+            return
+        }
+
+        def projectFolder = Paths.get("$buildDir").getParent()
+        def libsFolder = projectFolder.resolve("embedded-plugins").resolve("libs")
+
+        into libsFolder.toString()
+        from configuration
+    }
+}
+
+task preparePlugin(type: Copy, dependsOn: 'copyPluginDependences') {
+
+    def projectFolder = Paths.get("$buildDir").getParent()
+    def embeddedPluginsFolder = projectFolder.resolve("embedded-plugins")
+    def pluginFolder = embeddedPluginsFolder.resolve(String.valueOf(artifactId))
+
+    from jar
+    into pluginFolder.toString()
+}
+
+task deployPlugin(type: Zip, dependsOn: 'preparePlugin') {
+    doFirst {
+
+        def projectFolder = Paths.get("$buildDir").getParent()
+        def deployPluginFolder = projectFolder.resolve("deploy-plugin")
+
+        if (!Files.exists(deployPluginFolder)) {
+            Files.createDirectory(deployPluginFolder)
+        }
+    }
+
+    def projectFolder = Paths.get("$buildDir").getParent()
+    def embeddedPluginsFolder = projectFolder.resolve("embedded-plugins")
+    def pluginFolder = embeddedPluginsFolder.resolve(String.valueOf(artifactId))
+    def deployPluginFolder = projectFolder.resolve("deploy-plugin")
+
+    from pluginFolder.toString()
+    destinationDir deployPluginFolder.toFile()
+}
+
+defaultTasks 'install'
+
+// To specify a license in the pom:
+install {
+    repositories.mavenInstaller {
+        pom.version = version
+        pom.artifactId = artifactId
+    }
+}
