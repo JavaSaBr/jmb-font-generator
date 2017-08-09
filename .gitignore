@@ -2,3 +2,6 @@
 /.idea/
 *.so
 *.iml
+/build/
+/embedded-plugins/
+/out/
