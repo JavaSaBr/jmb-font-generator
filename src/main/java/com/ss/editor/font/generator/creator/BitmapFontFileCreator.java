@@ -6,6 +6,7 @@ import com.ss.editor.FileExtensions;
 import com.ss.editor.annotation.FXThread;
 import com.ss.editor.annotation.FromAnyThread;
 import com.ss.editor.font.generator.FontGeneratorEditorPlugin;
+import com.ss.editor.font.generator.Messages;
 import com.ss.editor.plugin.api.file.creator.GenericFileCreator;
 import com.ss.editor.plugin.api.property.PropertyDefinition;
 import com.ss.editor.ui.component.creator.FileCreatorDescription;
@@ -83,7 +84,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     public static final FileCreatorDescription DESCRIPTION = new FileCreatorDescription();
 
     static {
-        DESCRIPTION.setFileDescription("Generate font");
+        DESCRIPTION.setFileDescription(Messages.FONT_GENERATOR_DESCRIPTION);
         DESCRIPTION.setConstructor(BitmapFontFileCreator::new);
     }
 
@@ -121,15 +122,15 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     protected Array<PropertyDefinition> getPropertyDefinitions() {
 
         final Array<PropertyDefinition> result = ArrayFactory.newArray(PropertyDefinition.class);
-        result.add(new PropertyDefinition(AWT_FONT, "Font", PROP_FONT, null));
-        result.add(new PropertyDefinition(INTEGER, "Image size", PROP_IMAGE_SIZE, 256, 32, 4096));
-        result.add(new PropertyDefinition(INTEGER, "Font size", PROP_FONT_SIZE, 16, 4, 128));
-        result.add(new PropertyDefinition(STRING_FROM_LIST, "Font style", PROP_FONT_STYLE, "Plain", FONT_STYLES));
-        result.add(new PropertyDefinition(INTEGER, "Padding X", PROP_PADDING_X, 0, -10, 10));
-        result.add(new PropertyDefinition(INTEGER, "Padding Y", PROP_PADDING_Y, 0, -10, 10));
-        result.add(new PropertyDefinition(INTEGER, "Letter spacing", PROP_LETTER_SPACING, 0, -10, 10));
-        result.add(new PropertyDefinition(INTEGER, "First char", PROP_FIRST_CHAR, 0, 0, Character.MAX_CODE_POINT));
-        result.add(new PropertyDefinition(INTEGER, "Last char", PROP_LAST_CHAR, 256, 0, Character.MAX_CODE_POINT));
+        result.add(new PropertyDefinition(AWT_FONT, Messages.FONT_GENERATOR_PROP_FONT, PROP_FONT, null));
+        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_FONT_SIZE, PROP_FONT_SIZE, 16, 4, 128));
+        result.add(new PropertyDefinition(STRING_FROM_LIST, Messages.FONT_GENERATOR_PROP_FONT_STYLE, PROP_FONT_STYLE, "Plain", FONT_STYLES));
+        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_IMAGE_SIZE, PROP_IMAGE_SIZE, 256, 32, 4096));
+        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_PADDING_X, PROP_PADDING_X, 0, -10, 10));
+        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_PADDING_Y, PROP_PADDING_Y, 0, -10, 10));
+        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_LETTER_SPACING, PROP_LETTER_SPACING, 0, -10, 10));
+        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_FIRST_CHAR, PROP_FIRST_CHAR, 0, 0, Character.MAX_CODE_POINT));
+        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_LAST_CHAR, PROP_LAST_CHAR, 256, 0, Character.MAX_CODE_POINT));
 
         return result;
     }
@@ -196,7 +197,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     @Override
     @FromAnyThread
     protected String getTitleText() {
-        return super.getTitleText();
+        return Messages.FONT_GENERATOR_TITLE;
     }
 
     @NotNull
