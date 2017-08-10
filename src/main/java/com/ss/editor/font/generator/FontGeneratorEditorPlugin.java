@@ -18,8 +18,8 @@ import org.jetbrains.annotations.NotNull;
         id = "com.ss.editor.font.generator",
         version = "1.0.0",
         minAppVersion = "0.9.13",
-        name = "jME font Generator",
-        description = "The plugin to generate native jME fonts from system fonts"
+        name = "jME Font Generator",
+        description = "A plugin to generate native jME fonts based on system fonts."
 )
 public class FontGeneratorEditorPlugin extends EditorPlugin {
 
