@@ -105,8 +105,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     /**
      * @return the image view to show preview of font.
      */
-    @NotNull
-    private ImageView getImageView() {
+    private @NotNull ImageView getImageView() {
         return notNull(imageView);
     }
 
@@ -116,10 +115,9 @@ public class BitmapFontFileCreator extends GenericFileCreator {
         return true;
     }
 
-    @NotNull
     @Override
     @FromAnyThread
-    protected Array<PropertyDefinition> getPropertyDefinitions() {
+    protected @NotNull Array<PropertyDefinition> getPropertyDefinitions() {
 
         final Array<PropertyDefinition> result = ArrayFactory.newArray(PropertyDefinition.class);
         result.add(new PropertyDefinition(AWT_FONT, Messages.FONT_GENERATOR_PROP_FONT, PROP_FONT, null));
@@ -193,17 +191,15 @@ public class BitmapFontFileCreator extends GenericFileCreator {
         }
     }
 
-    @NotNull
     @Override
     @FromAnyThread
-    protected String getTitleText() {
+    protected @NotNull String getTitleText() {
         return Messages.FONT_GENERATOR_TITLE;
     }
 
-    @NotNull
     @Override
     @FromAnyThread
-    protected String getFileExtension() {
+    protected @NotNull String getFileExtension() {
         return FontGeneratorEditorPlugin.FONT_EXTENSION;
     }
 
@@ -268,10 +264,10 @@ public class BitmapFontFileCreator extends GenericFileCreator {
      * @param debug      the debug.
      * @return the image.
      */
-    @NotNull
-    private BufferedImage buildImage(@NotNull final String fontName, final int bitmapSize, final int fontSize,
-                                    final int style, final int paddingX, final int paddingY, final char firstChar,
-                                    final char lastChar, final boolean debug) {
+    @FromAnyThread
+    private @NotNull BufferedImage buildImage(@NotNull final String fontName, final int bitmapSize, final int fontSize,
+                                              final int style, final int paddingX, final int paddingY,
+                                              final char firstChar, final char lastChar, final boolean debug) {
 
         final Font font = new Font(fontName, style, fontSize);
         final BufferedImage fontImage = new BufferedImage(bitmapSize, bitmapSize, BufferedImage.TYPE_4BYTE_ABGR);
@@ -337,11 +333,11 @@ public class BitmapFontFileCreator extends GenericFileCreator {
      * @param lastChar      the last char.
      * @return the description.
      */
-    @NotNull
-    private String buildDescription(@NotNull final String fontName, @NotNull final String fileName,
-                                    final int bitmapSize, final int fontSize, final int style, final int paddingX,
-                                    final int paddingY, final int letterSpacing, final char firstChar,
-                                    final char lastChar) {
+    @FromAnyThread
+    private @NotNull String buildDescription(@NotNull final String fontName, @NotNull final String fileName,
+                                             final int bitmapSize, final int fontSize, final int style,
+                                             final int paddingX, final int paddingY, final int letterSpacing,
+                                             final char firstChar, final char lastChar) {
 
         System.out.println((int) lastChar);
 
