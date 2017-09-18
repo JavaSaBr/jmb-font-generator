@@ -6,7 +6,7 @@ import com.ss.editor.FileExtensions;
 import com.ss.editor.annotation.FXThread;
 import com.ss.editor.annotation.FromAnyThread;
 import com.ss.editor.font.generator.FontGeneratorEditorPlugin;
-import com.ss.editor.font.generator.Messages;
+import com.ss.editor.font.generator.PluginMessages;
 import com.ss.editor.plugin.api.file.creator.GenericFileCreator;
 import com.ss.editor.plugin.api.property.PropertyDefinition;
 import com.ss.editor.ui.component.creator.FileCreatorDescription;
@@ -84,7 +84,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     public static final FileCreatorDescription DESCRIPTION = new FileCreatorDescription();
 
     static {
-        DESCRIPTION.setFileDescription(Messages.FONT_GENERATOR_DESCRIPTION);
+        DESCRIPTION.setFileDescription(PluginMessages.FONT_GENERATOR_DESCRIPTION);
         DESCRIPTION.setConstructor(BitmapFontFileCreator::new);
     }
 
@@ -105,6 +105,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     /**
      * @return the image view to show preview of font.
      */
+    @FXThread
     private @NotNull ImageView getImageView() {
         return notNull(imageView);
     }
@@ -120,15 +121,15 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     protected @NotNull Array<PropertyDefinition> getPropertyDefinitions() {
 
         final Array<PropertyDefinition> result = ArrayFactory.newArray(PropertyDefinition.class);
-        result.add(new PropertyDefinition(AWT_FONT, Messages.FONT_GENERATOR_PROP_FONT, PROP_FONT, null));
-        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_FONT_SIZE, PROP_FONT_SIZE, 16, 4, 128));
-        result.add(new PropertyDefinition(STRING_FROM_LIST, Messages.FONT_GENERATOR_PROP_FONT_STYLE, PROP_FONT_STYLE, "Plain", FONT_STYLES));
-        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_IMAGE_SIZE, PROP_IMAGE_SIZE, 256, 32, 4096));
-        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_PADDING_X, PROP_PADDING_X, 0, -10, 10));
-        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_PADDING_Y, PROP_PADDING_Y, 0, -10, 10));
-        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_LETTER_SPACING, PROP_LETTER_SPACING, 0, -10, 10));
-        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_FIRST_CHAR, PROP_FIRST_CHAR, 0, 0, Character.MAX_CODE_POINT));
-        result.add(new PropertyDefinition(INTEGER, Messages.FONT_GENERATOR_PROP_LAST_CHAR, PROP_LAST_CHAR, 256, 0, Character.MAX_CODE_POINT));
+        result.add(new PropertyDefinition(AWT_FONT, PluginMessages.FONT_GENERATOR_PROP_FONT, PROP_FONT, null));
+        result.add(new PropertyDefinition(INTEGER, PluginMessages.FONT_GENERATOR_PROP_FONT_SIZE, PROP_FONT_SIZE, 16, 4, 128));
+        result.add(new PropertyDefinition(STRING_FROM_LIST, PluginMessages.FONT_GENERATOR_PROP_FONT_STYLE, PROP_FONT_STYLE, "Plain", FONT_STYLES));
+        result.add(new PropertyDefinition(INTEGER, PluginMessages.FONT_GENERATOR_PROP_IMAGE_SIZE, PROP_IMAGE_SIZE, 256, 32, 4096));
+        result.add(new PropertyDefinition(INTEGER, PluginMessages.FONT_GENERATOR_PROP_PADDING_X, PROP_PADDING_X, 0, -10, 10));
+        result.add(new PropertyDefinition(INTEGER, PluginMessages.FONT_GENERATOR_PROP_PADDING_Y, PROP_PADDING_Y, 0, -10, 10));
+        result.add(new PropertyDefinition(INTEGER, PluginMessages.FONT_GENERATOR_PROP_LETTER_SPACING, PROP_LETTER_SPACING, 0, -10, 10));
+        result.add(new PropertyDefinition(INTEGER, PluginMessages.FONT_GENERATOR_PROP_FIRST_CHAR, PROP_FIRST_CHAR, 0, 0, Character.MAX_CODE_POINT));
+        result.add(new PropertyDefinition(INTEGER, PluginMessages.FONT_GENERATOR_PROP_LAST_CHAR, PROP_LAST_CHAR, 256, 0, Character.MAX_CODE_POINT));
 
         return result;
     }
@@ -175,6 +176,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
      * @param vars the variables.
      * @return the font style code.
      */
+    @FromAnyThread
     private int getFontStyle(final @NotNull VarTable vars) {
 
         final String fontStyle = vars.get(PROP_FONT_STYLE);
@@ -194,7 +196,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     @Override
     @FromAnyThread
     protected @NotNull String getTitleText() {
-        return Messages.FONT_GENERATOR_TITLE;
+        return PluginMessages.FONT_GENERATOR_TITLE;
     }
 
     @Override
