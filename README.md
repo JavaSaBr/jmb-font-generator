@@ -1,10 +1,10 @@
 
-## jME Font Generator 1.0.3
+## jME Font Generator 1.0.4
 
-It's a plugin for jME SpaceShift Editor to add an action to create jME bitmap fonts based on system fonts.
-This plugin is embedded in the Editor since 1.1.0 version.
+It's a plugin for jMonkeyBuilder to add an action to create jME bitmap fonts based on system fonts.
+This plugin is embedded in the Editor since 1.3.0 version.
 
-#### It requires jME SpaceShift Editor 1.1.0 or higher.
+#### It requires jMonkeyBuilder 1.3.0 or higher.
 
 This plugin is in plugins list of the editor:
 
