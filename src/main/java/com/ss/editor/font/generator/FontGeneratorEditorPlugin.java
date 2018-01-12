@@ -7,7 +7,11 @@ import com.ss.editor.plugin.EditorPlugin;
 import com.ss.editor.ui.component.creator.FileCreatorRegistry;
 import com.ss.rlib.plugin.PluginContainer;
 import com.ss.rlib.plugin.annotation.PluginDescription;
+import com.ss.rlib.util.Utils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.net.URL;
 
 /**
  * The implementation of an editor plugin.
@@ -16,19 +20,16 @@ import org.jetbrains.annotations.NotNull;
  */
 @PluginDescription(
         id = "com.ss.editor.font.generator",
-        version = "1.0.4",
-        minAppVersion = "1.3.0",
+        version = "1.0.5",
+        minAppVersion = "1.5.1",
         name = "jME Font Generator",
-        description = "A plugin to generate native jME fonts based on system fonts."
+        description = "Providers a new file wizard to generate native jME fonts based on system fonts."
 )
 public class FontGeneratorEditorPlugin extends EditorPlugin {
 
     @NotNull
     public static final String FONT_EXTENSION = "fnt";
 
-    /**
-     * @param pluginContainer the plugin container.
-     */
     public FontGeneratorEditorPlugin(@NotNull final PluginContainer pluginContainer) {
         super(pluginContainer);
     }
@@ -51,5 +52,11 @@ public class FontGeneratorEditorPlugin extends EditorPlugin {
 
             return null;
         });
+    }
+
+    @Override
+    @FromAnyThread
+    public @Nullable URL getHomePageUrl() {
+        return Utils.get("https://github.com/JavaSaBr/jmb-font-generator", URL::new);
     }
 }
