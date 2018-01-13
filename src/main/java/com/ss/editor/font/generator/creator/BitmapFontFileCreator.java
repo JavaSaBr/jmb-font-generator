@@ -3,7 +3,7 @@ package com.ss.editor.font.generator.creator;
 import static com.ss.editor.extension.property.EditablePropertyType.*;
 import static com.ss.rlib.util.ObjectUtils.notNull;
 import com.ss.editor.FileExtensions;
-import com.ss.editor.annotation.FXThread;
+import com.ss.editor.annotation.FxThread;
 import com.ss.editor.annotation.FromAnyThread;
 import com.ss.editor.font.generator.FontGeneratorEditorPlugin;
 import com.ss.editor.font.generator.PluginMessages;
@@ -95,7 +95,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     private ImageView imageView;
 
     @Override
-    @FXThread
+    @FxThread
     protected void createPreview(@NotNull final BorderPane container) {
         super.createPreview(container);
         imageView = new ImageView();
@@ -105,7 +105,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     /**
      * @return the image view to show preview of font.
      */
-    @FXThread
+    @FxThread
     private @NotNull ImageView getImageView() {
         return notNull(imageView);
     }
@@ -135,7 +135,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     }
 
     @Override
-    @FXThread
+    @FxThread
     protected boolean validate(@NotNull final VarTable vars) {
         if (!vars.has(PROP_FONT)) return false;
         final int fontStyle = getFontStyle(vars);
@@ -206,7 +206,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     }
 
     @Override
-    @FXThread
+    @FxThread
     protected void processOk() {
         super.processOk();
 
@@ -290,8 +290,9 @@ public class BitmapFontFileCreator extends GenericFileCreator {
         for (int i = firstChar; i <= lastChar; i++) {
 
             final char ch = (char) i;
-
-            if (!font.canDisplay(ch)) continue;
+            if (!font.canDisplay(ch)) {
+                continue;
+            }
 
             final String str = Character.toString(ch);
             final TextLayout textLayout = new TextLayout(str, font, fontRenderContext);
@@ -340,8 +341,6 @@ public class BitmapFontFileCreator extends GenericFileCreator {
                                              final int bitmapSize, final int fontSize, final int style,
                                              final int paddingX, final int paddingY, final int letterSpacing,
                                              final char firstChar, final char lastChar) {
-
-        System.out.println((int) lastChar);
 
         final Font font = new Font(fontName, style, fontSize);
         final StringBuilder locations = new StringBuilder();
