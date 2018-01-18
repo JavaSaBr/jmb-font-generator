@@ -103,6 +103,8 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     }
 
     /**
+     * Get the image view to show preview of font.
+     *
      * @return the image view to show preview of font.
      */
     @FxThread
@@ -137,9 +139,15 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     @Override
     @FxThread
     protected boolean validate(@NotNull final VarTable vars) {
-        if (!vars.has(PROP_FONT)) return false;
+
+        if (!vars.has(PROP_FONT)) {
+            return false;
+        }
+
         final int fontStyle = getFontStyle(vars);
-        if (fontStyle == -1) return false;
+        if (fontStyle == -1) {
+            return false;
+        }
 
         final Font font = vars.get(PROP_FONT);
         final int imageSize = vars.getInteger(PROP_IMAGE_SIZE);
@@ -177,7 +185,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
      * @return the font style code.
      */
     @FromAnyThread
-    private int getFontStyle(final @NotNull VarTable vars) {
+    private int getFontStyle(@NotNull final VarTable vars) {
 
         final String fontStyle = vars.get(PROP_FONT_STYLE);
 
