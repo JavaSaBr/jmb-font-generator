@@ -175,7 +175,7 @@ task deployPlugin(type: Zip, dependsOn: 'preparePlugin') {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
+    gradleVersion = '4.5.1'
 }
 
 defaultTasks 'install'
