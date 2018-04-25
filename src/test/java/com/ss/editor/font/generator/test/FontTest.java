@@ -4,7 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
-import com.ss.rlib.concurrent.util.ThreadUtils;
+import com.ss.rlib.common.concurrent.util.ThreadUtils;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
