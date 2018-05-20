@@ -5,3 +5,8 @@
 /build/
 /embedded-plugins/
 /out/
+/bin/
+/.settings/
+.project
+.classpath
+*.dll
