@@ -20,7 +20,7 @@ import java.net.URL;
  */
 @PluginDescription(
         id = "com.ss.editor.font.generator",
-        version = "1.1.0",
+        version = "1.1.1",
         minAppVersion = "1.8.0",
         name = "jME Font Generator",
         description = "Providers a new file wizard to generate native jME fonts based on system fonts."
