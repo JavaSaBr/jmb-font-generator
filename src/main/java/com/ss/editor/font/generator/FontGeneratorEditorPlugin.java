@@ -1,5 +1,6 @@
 package com.ss.editor.font.generator;
 
+import com.ss.editor.annotation.BackgroundThread;
 import com.ss.editor.annotation.FromAnyThread;
 import com.ss.editor.font.generator.creator.BitmapFontFileCreator;
 import com.ss.editor.manager.FileIconManager;
@@ -20,14 +21,13 @@ import java.net.URL;
  */
 @PluginDescription(
         id = "com.ss.editor.font.generator",
-        version = "1.1.1",
-        minAppVersion = "1.8.0",
+        version = "1.1.2",
+        minAppVersion = "1.9.0",
         name = "jME Font Generator",
         description = "Providers a new file wizard to generate native jME fonts based on system fonts."
 )
 public class FontGeneratorEditorPlugin extends EditorPlugin {
 
-    @NotNull
     public static final String FONT_EXTENSION = "fnt";
 
     public FontGeneratorEditorPlugin(@NotNull PluginContainer pluginContainer) {
@@ -35,14 +35,14 @@ public class FontGeneratorEditorPlugin extends EditorPlugin {
     }
 
     @Override
-    @FromAnyThread
+    @BackgroundThread
     public void register(@NotNull FileCreatorRegistry registry) {
         super.register(registry);
         registry.register(BitmapFontFileCreator.DESCRIPTION);
     }
 
     @Override
-    @FromAnyThread
+    @BackgroundThread
     public void register(@NotNull FileIconManager iconManager) {
         iconManager.register((path, extension) -> {
 
