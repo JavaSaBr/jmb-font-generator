@@ -8,6 +8,7 @@ import com.ss.editor.plugin.EditorPlugin;
 import com.ss.editor.ui.component.creator.FileCreatorRegistry;
 import com.ss.rlib.common.plugin.PluginContainer;
 import com.ss.rlib.common.plugin.annotation.PluginDescription;
+import com.ss.rlib.common.plugin.extension.ExtensionPointManager;
 import com.ss.rlib.common.util.Utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,22 +37,25 @@ public class FontGeneratorEditorPlugin extends EditorPlugin {
 
     @Override
     @BackgroundThread
-    public void register(@NotNull FileCreatorRegistry registry) {
-        super.register(registry);
-        registry.register(BitmapFontFileCreator.DESCRIPTION);
+    public void register(@NotNull ExtensionPointManager manager) {
+        super.register(manager);
+
+        manager.getExtensionPoint(FileCreatorRegistry.EP_DESCRIPTORS)
+                .register(BitmapFontFileCreator.DESCRIPTOR);
+        manager.getExtensionPoint(FileIconManager.EP_ICON_FINDERS)
+                .register(makeIconFinder());
     }
 
-    @Override
-    @BackgroundThread
-    public void register(@NotNull FileIconManager iconManager) {
-        iconManager.register((path, extension) -> {
+    @FromAnyThread
+    private @NotNull FileIconManager.IconFinder makeIconFinder() {
+        return (path, extension) -> {
 
             if (FONT_EXTENSION.equals(extension)) {
                 return "com/ss/editor/font/generator/icons/text.svg";
             }
 
             return null;
-        });
+        };
     }
 
     @Override

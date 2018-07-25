@@ -1,5 +1,5 @@
 
-## jME Font Generator 1.1.2
+## jME Font Generator 1.1.3
 
 It's a plugin for jMonkeyBuilder which provides an action to create jME bitmap fonts based on system fonts.
 This plugin is embedded in jMB since 1.3.0 version.

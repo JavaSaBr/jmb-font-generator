@@ -9,12 +9,11 @@ import com.ss.editor.font.generator.FontGeneratorEditorPlugin;
 import com.ss.editor.font.generator.PluginMessages;
 import com.ss.editor.plugin.api.file.creator.GenericFileCreator;
 import com.ss.editor.plugin.api.property.PropertyDefinition;
-import com.ss.editor.ui.component.creator.FileCreatorDescription;
+import com.ss.editor.ui.component.creator.FileCreatorDescriptor;
 import com.ss.editor.util.EditorUtil;
 import com.ss.rlib.common.util.FileUtils;
 import com.ss.rlib.common.util.VarTable;
 import com.ss.rlib.common.util.array.Array;
-import com.ss.rlib.common.util.array.ArrayFactory;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -50,14 +49,12 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     private static final String PROP_LAST_CHAR = "lastChar";
     private static final String PROP_LETTER_SPACING = "letterSpacing";
 
-    private static final Array<String> FONT_STYLES = ArrayFactory.asArray("Plain", "Italic", "Bold");
+    private static final Array<String> FONT_STYLES = Array.of("Plain", "Italic", "Bold");
 
-    public static final FileCreatorDescription DESCRIPTION = new FileCreatorDescription();
-
-    static {
-        DESCRIPTION.setFileDescription(PluginMessages.FONT_GENERATOR_DESCRIPTION);
-        DESCRIPTION.setConstructor(BitmapFontFileCreator::new);
-    }
+    public static final FileCreatorDescriptor DESCRIPTOR = new FileCreatorDescriptor(
+            PluginMessages.FONT_GENERATOR_DESCRIPTION,
+            BitmapFontFileCreator::new
+    );
 
     /**
      * The image view to show preview of font.
@@ -93,7 +90,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     @FromAnyThread
     protected @NotNull Array<PropertyDefinition> getPropertyDefinitions() {
 
-        var result = ArrayFactory.<PropertyDefinition>newArray(PropertyDefinition.class);
+        var result = Array.ofType(PropertyDefinition.class);
         result.add(new PropertyDefinition(AWT_FONT, PluginMessages.FONT_GENERATOR_PROP_FONT,
                 PROP_FONT, null));
         result.add(new PropertyDefinition(INTEGER, PluginMessages.FONT_GENERATOR_PROP_FONT_SIZE,
@@ -125,6 +122,7 @@ public class BitmapFontFileCreator extends GenericFileCreator {
         }
 
         var fontStyle = getFontStyle(vars);
+
         if (fontStyle == -1) {
             return false;
         }
