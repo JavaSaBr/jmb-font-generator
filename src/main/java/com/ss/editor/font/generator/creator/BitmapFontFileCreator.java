@@ -18,7 +18,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -59,25 +58,18 @@ public class BitmapFontFileCreator extends GenericFileCreator {
     /**
      * The image view to show preview of font.
      */
-    @Nullable
-    private ImageView imageView;
+    @NotNull
+    private final ImageView imageView;
+
+    private BitmapFontFileCreator() {
+        imageView = new ImageView();
+    }
 
     @Override
     @FxThread
     protected void createPreview(@NotNull BorderPane container) {
         super.createPreview(container);
-        imageView = new ImageView();
         container.setCenter(imageView);
-    }
-
-    /**
-     * Get the image view to show preview of font.
-     *
-     * @return the image view to show preview of font.
-     */
-    @FxThread
-    private @NotNull ImageView getImageView() {
-        return notNull(imageView);
     }
 
     @Override
@@ -140,7 +132,6 @@ public class BitmapFontFileCreator extends GenericFileCreator {
 
         var previewContainer = notNull(getPreviewContainer());
 
-        var imageView = getImageView();
         imageView.setImage(SwingFXUtils.toFXImage(image, null));
 
         if (imageSize + 12 > previewContainer.getWidth()) {
@@ -206,7 +197,6 @@ public class BitmapFontFileCreator extends GenericFileCreator {
         var parent = fontFile.getParent();
         var imageFile = parent.resolve(filename + "." + FileExtensions.IMAGE_PNG);
 
-        var vars = getVars();
         var font = vars.get(PROP_FONT, Font.class);
         var imageSize = vars.getInteger(PROP_IMAGE_SIZE);
         var fontSize = vars.getInteger(PROP_FONT_SIZE);
